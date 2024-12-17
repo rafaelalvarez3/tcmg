@@ -6,9 +6,15 @@
 //
 
 import Foundation
+import ArgumentParser
 
 @main
-struct Main {
+struct Main: ParsableCommand {
+    static let configuration = CommandConfiguration(abstract:  "A utility to create and train Core ML models.")
+    
+    @Option var trainingDataFile: String
+    @Option var testingDataFile: String
+    
     static func main() {
         print("hello tcmg")
     }

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		535FC8982D11B5F10014C751 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 535FC8972D11B5F10014C751 /* ArgumentParser */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		53C0C0F62D110AF0007ED75D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -35,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				535FC8982D11B5F10014C751 /* ArgumentParser in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +82,7 @@
 			);
 			name = tcmg;
 			packageProductDependencies = (
+				535FC8972D11B5F10014C751 /* ArgumentParser */,
 			);
 			productName = tcmg;
 			productReference = 53C0C0F82D110AF0007ED75D /* tcmg */;
@@ -106,6 +112,9 @@
 			);
 			mainGroup = 53C0C0EF2D110AF0007ED75D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				535FC8962D11B5F10014C751 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 53C0C0F92D110AF0007ED75D /* Products */;
 			projectDirPath = "";
@@ -289,6 +298,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		535FC8962D11B5F10014C751 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		535FC8972D11B5F10014C751 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 535FC8962D11B5F10014C751 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 53C0C0F02D110AF0007ED75D /* Project object */;
 }
