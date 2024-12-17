@@ -7,5 +7,9 @@
 
 import Foundation
 
-print("Hello, World!")
-
+@main
+struct Main {
+    static func main() {
+        print("hello tcmg")
+    }
+}
