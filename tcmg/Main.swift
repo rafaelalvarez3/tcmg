@@ -7,18 +7,29 @@
 
 import Foundation
 import ArgumentParser
+import CreateML
+import TabularData
+
 
 @main
 struct Main: ParsableCommand {
+    
     static let configuration = CommandConfiguration(abstract:  "A utility to create and train Core ML models.")
     
     @Option(help: "A training data file.")
-    var trainingDataFile: String
+    var trainingDataFileName: String
     
     @Option(help: "A testing data file.")
-    var testingDataFile: String
+    var testingDataFileName: String
+    
+    
+    
+    
+    
     
     public func run() throws {
         print("hello tcmg")
+        print(self.trainingDataFileName)
+        print(self.testingDataFileName)
     }
 }
