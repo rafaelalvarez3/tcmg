@@ -18,7 +18,7 @@ struct Main: ParsableCommand {
     @Option(help: "A testing data file.")
     var testingDataFile: String
     
-    static func main() {
+    public func run() throws {
         print("hello tcmg")
     }
 }
