@@ -28,6 +28,21 @@ struct Main: ParsableCommand {
         
         print(trainingFileURL)
         print(testingFileURL)
-    
+        
+        do {
+            let trainingData = try DataFrame(contentsOfJSONFile: trainingFileURL)
+        } catch {
+            print("TRAINING: AN UNKNOWN ERROR OCCURRED")
+        }
+        
+        do {
+            let testingData = try DataFrame(contentsOfJSONFile: testingFileURL)
+        } catch {
+            print("TESTING: AN UNKNOWN ERROR OCCURRED")
+        }
+        
+
+        
     }
+    
 }
