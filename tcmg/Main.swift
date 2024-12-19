@@ -16,10 +16,10 @@ struct Main: ParsableCommand {
     
     static let configuration = CommandConfiguration(abstract:  "A utility to create and train Core ML models.")
     
-    @Option(help: "The file path of the training data file.")
+    @Option(name: [.customLong("trainfile"), .customShort("r")], help: "The file path of the training data file.")
     var trainingDataFileName: String
     
-    @Option(help: "The file path of the testing data file.")
+    @Option(name: [.customLong("testfile"), .customShort("e")], help: "The file path of the testing data file.")
     var testingDataFileName: String
     
     public func run() throws {
