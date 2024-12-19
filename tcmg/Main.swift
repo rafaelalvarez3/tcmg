@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Main.swift
 //  tcmg
 //
 //  Created by Rafael Alvarez on 12/16/24.
@@ -16,20 +16,18 @@ struct Main: ParsableCommand {
     
     static let configuration = CommandConfiguration(abstract:  "A utility to create and train Core ML models.")
     
-    @Option(help: "A training data file.")
+    @Option(help: "The file path of the training data file.")
     var trainingDataFileName: String
     
-    @Option(help: "A testing data file.")
+    @Option(help: "The file path of the testing data file.")
     var testingDataFileName: String
     
-    
-    
-    
-    
-    
     public func run() throws {
-        print("hello tcmg")
-        print(self.trainingDataFileName)
-        print(self.testingDataFileName)
+        let trainingFileURL = URL(fileURLWithPath: self.trainingDataFileName)
+        let testingFileURL = URL(fileURLWithPath: self.testingDataFileName)
+        
+        print(trainingFileURL)
+        print(testingFileURL)
+    
     }
 }
