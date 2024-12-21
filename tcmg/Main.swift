@@ -23,21 +23,28 @@ struct Main: ParsableCommand {
     var testingDataFileName: String
     
     public func run() throws {
-        let trainingFileURL = URL(fileURLWithPath: self.trainingDataFileName)
-        let testingFileURL = URL(fileURLWithPath: self.testingDataFileName)
         
+        Utility().printMessage(message: trainingDataFileName)
+        Utility().printMessage(message: testingDataFileName)
+        
+        
+        //let trainingFileURL = URL(fileURLWithPath: self.trainingDataFileName)
+        //let testingFileURL = URL(fileURLWithPath: self.testingDataFileName)
+       
+        /*
         do {
-            let trainingData = try DataFrame(contentsOfJSONFile: trainingFileURL)
+            _ = try DataFrame(contentsOfJSONFile: trainingFileURL)
             print("Training data loaded.")
         } catch {
             print("TRAINING: AN UNKNOWN ERROR OCCURRED")
         }
         
         do {
-            let testingData = try DataFrame(contentsOfJSONFile: testingFileURL)
+            _ = try DataFrame(contentsOfJSONFile: testingFileURL)
             print("Testing data loaded.")
         } catch {
             print("TESTING: AN UNKNOWN ERROR OCCURRED")
         }
+        */
     }
 }
