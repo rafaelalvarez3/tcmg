@@ -25,6 +25,10 @@ class Utility {
     
     func newJSONDataFrame(JSONFileName: String) throws -> DataFrame {
         let fileURL = URL(fileURLWithPath: JSONFileName)
+        
+        guard fileURL.pathExtension == "json" else {
+            throw UtilityError.fileWrongType
+        }
 
         let data = try DataFrame(contentsOfJSONFile: fileURL)
         return data
