@@ -18,12 +18,29 @@ class Utility {
     /* Begin actual utilities. */
     
     enum UtilityError: Error {
-        case fileNotFound
         case fileNameNotEntered
+        case fileNotFound
         case fileWrongType
     }
     
-    func newJSONDataFrame(JSONFileName: String) throws -> DataFrame {
+    func newCSVDataFrame(CSVFileName: String) throws -> DataFrame {
+        let fileURL = URL(fileURLWithPath: CSVFileName)
+        
+        guard fileURL.pathExtension != "" else {
+            throw UtilityError.fileNameNotEntered
+        }
+        
+        guard fileURL.pathExtension == "csv" else {
+            throw UtilityError.fileWrongType
+        }
+        
+        let data = try DataFrame(contentsOfCSVFile: fileURL)
+        
+        return data
+        
+    }
+    
+   /* func newJSONDataFrame(JSONFileName: String) throws -> DataFrame {
         let fileURL = URL(fileURLWithPath: JSONFileName)
         
         guard fileURL.pathExtension == "json" else {
@@ -32,5 +49,5 @@ class Utility {
 
         let data = try DataFrame(contentsOfJSONFile: fileURL)
         return data
-    }
+    } */
 }
