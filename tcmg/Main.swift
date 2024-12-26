@@ -13,7 +13,6 @@ import TabularData
 
 @main
 struct Main: ParsableCommand {
-    
     static let configuration = CommandConfiguration(abstract:  "A utility to create and train Core ML models.")
     
     @Option(name: [.customLong("trainfile"), .customShort("r")], help: "The file path of the training data file.")
@@ -23,28 +22,13 @@ struct Main: ParsableCommand {
     var testingDataFileName: String
     
     public func run() throws {
-        
-        Utility().printMessage(message: trainingDataFileName)
-        Utility().printMessage(message: testingDataFileName)
-        
-        
-        //let trainingFileURL = URL(fileURLWithPath: self.trainingDataFileName)
-        //let testingFileURL = URL(fileURLWithPath: self.testingDataFileName)
-       
-        /*
-        do {
-            _ = try DataFrame(contentsOfJSONFile: trainingFileURL)
-            print("Training data loaded.")
-        } catch {
-            print("TRAINING: AN UNKNOWN ERROR OCCURRED")
-        }
-        
-        do {
-            _ = try DataFrame(contentsOfJSONFile: testingFileURL)
-            print("Testing data loaded.")
-        } catch {
-            print("TESTING: AN UNKNOWN ERROR OCCURRED")
-        }
-        */
+         do {
+             let trainingData = try newCSVDataFrame(trainingDataFileName)
+             print("CSV file loaded into a data frame successfully.")
+         } catch UtilityError.fileWrongType {
+             print("ERROR: NOT A VALID CSV FILE")
+         } catch {
+             print("ERROR: UNKNOWN ERROR")
+         }
     }
 }
