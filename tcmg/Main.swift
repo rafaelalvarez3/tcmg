@@ -24,11 +24,12 @@ struct Main: ParsableCommand {
     public func run() throws {
          do {
              let trainingData = try newCSVDataFrame(trainingDataFileName)
-             print("CSV file loaded into a data frame successfully.")
+             print(trainingData)
          } catch UtilityError.fileWrongType {
              print("ERROR: NOT A VALID CSV FILE")
          } catch {
              print("ERROR: UNKNOWN ERROR")
          }
+        
     }
 }
