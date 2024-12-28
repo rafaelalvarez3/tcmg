@@ -13,9 +13,17 @@ import TabularData
 
 @main
 struct Main: ParsableCommand {
-    static let configuration = CommandConfiguration(abstract:  "A utility to create and train Core ML models.")
+    static let configuration = CommandConfiguration(
+        abstract:  "A utility to create and train Core ML models."
+    )
     
-    @Option(name: [.customLong("trainfile"), .customShort("t")], help: "The file path of the training data file.")
+    @Option(
+        name: [
+            .customLong("trainfile"),
+            .customShort("t")
+        ],
+        help: "The path of the training file."
+    )
     var trainingDataFileName: String
     
     public func run() throws {
