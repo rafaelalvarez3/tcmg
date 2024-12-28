@@ -27,14 +27,19 @@ struct Main: ParsableCommand {
     var trainingDataFileName: String
     
     public func run() throws {
-         do {
-             let trainingData = try newCSVDataFrame(trainingDataFileName)
-             print(trainingData)
-         } catch UtilityError.fileWrongType {
-             print("ERROR: NOT A VALID CSV FILE")
-         } catch {
-             print("ERROR: UNKNOWN ERROR")
-         }
+        
+        var trainingData: DataFrame = DataFrame()
+        
+        do {
+            trainingData = try newCSVDataFrame(trainingDataFileName)
+            print("CSV loaded to DataFrame successfully!")
+        } catch UtilityError.fileWrongType {
+            print("ERROR: NOT A VALID CSV FILE")
+        } catch {
+            print("ERROR: UNKNOWN ERROR")
+        }
+        
+        print(trainingData.summary())
         
     }
 }
