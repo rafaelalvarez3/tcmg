@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import CreateML
-import TabularData
 
 extension Main {
     enum UtilityError: Error {
