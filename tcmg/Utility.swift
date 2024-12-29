@@ -14,12 +14,11 @@ extension Main {
         case fileWrongType
     }
 
-    func newCSVDataFrame(_ CSVFileName: String) throws -> DataFrame {
-        let fileURL = URL(fileURLWithPath: CSVFileName)
+    func newCSVFileURL(_ CSVFilePath: String) throws -> URL {
+        let fileURL = URL(fileURLWithPath: CSVFilePath)
         guard fileURL.pathExtension == "csv" else {
             throw UtilityError.fileWrongType
         }
-        let data = try DataFrame(contentsOfCSVFile: fileURL)
-        return data
+        return fileURL
     }
 }

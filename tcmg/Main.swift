@@ -19,27 +19,41 @@ struct Main: ParsableCommand {
     
     @Option(
         name: [
-            .customLong("trainfile"),
-            .customShort("t")
+            .customLong("datafile"),
+            .customShort("d")
         ],
-        help: "The path of the training file."
+        help: "The path of the data file."
     )
-    var trainingDataFileName: String
+    var dataFileName: String
     
     public func run() throws {
+        let csvOptions = CSVReadingOptions(hasHeaderRow: true,
+                                           delimiter: ",")
         
-        var data: DataFrame = DataFrame()
+        let formattingOptions = FormattingOptions(maximumLineWidth: 250,
+                                                  maximumCellWidth: 250,
+                                                  maximumRowCount: 100,
+                                                  includesColumnTypes: false)
+        
+        var primaryDataFrame: DataFrame = DataFrame()
         
         do {
-            data = try newCSVDataFrame(trainingDataFileName)
-            print("CSV loaded to DataFrame successfully!")
+            let dataFileURL = try newCSVFileURL(dataFileName)
+            primaryDataFrame = try DataFrame(contentsOfCSVFile: dataFileURL,
+                                             rows: 0..<50,
+                                             options: csvOptions)
         } catch UtilityError.fileWrongType {
             print("ERROR: NOT A VALID CSV FILE")
         } catch {
-            print("ERROR: UNKNOWN ERROR")
+            print("ERROR: AN UNKNOWN ERROR")
         }
         
-        print(data.summary())
+        print(primaryDataFrame)
+        
+        print(primaryDataFrame.description(options: formattingOptions))
+        
+        //let regressorColumns = ["price", "solarPanels", "greenhouses", "size"]
+        //let classifierColumns = ["purpose", "solarPanels", "greenhouses", "size"]
         
     }
 }
