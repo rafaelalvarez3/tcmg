@@ -28,10 +28,10 @@ struct Main: ParsableCommand {
     
     public func run() throws {
         
-        var trainingData: DataFrame = DataFrame()
+        var data: DataFrame = DataFrame()
         
         do {
-            trainingData = try newCSVDataFrame(trainingDataFileName)
+            data = try newCSVDataFrame(trainingDataFileName)
             print("CSV loaded to DataFrame successfully!")
         } catch UtilityError.fileWrongType {
             print("ERROR: NOT A VALID CSV FILE")
@@ -39,7 +39,7 @@ struct Main: ParsableCommand {
             print("ERROR: UNKNOWN ERROR")
         }
         
-        print(trainingData.summary())
+        print(data.summary())
         
     }
 }
