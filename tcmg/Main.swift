@@ -33,7 +33,7 @@ struct Main: ParsableCommand {
         let formattingOptions = FormattingOptions(maximumLineWidth: 250,
                                                   maximumCellWidth: 250,
                                                   maximumRowCount: 100,
-                                                  includesColumnTypes: false)
+                                                  includesColumnTypes: true)
         
         var primaryDataFrame: DataFrame = DataFrame()
         
@@ -47,13 +47,26 @@ struct Main: ParsableCommand {
         } catch {
             print("ERROR: AN UNKNOWN ERROR")
         }
-        
-        print(primaryDataFrame)
-        
+
         print(primaryDataFrame.description(options: formattingOptions))
         
-        //let regressorColumns = ["price", "solarPanels", "greenhouses", "size"]
-        //let classifierColumns = ["purpose", "solarPanels", "greenhouses", "size"]
+        /* Creating the regressor dataframe. */
+        
+        let regressorColumns = ["price", "solarPanels", "greenhouses", "size"]
+        let regressorDataFrame = primaryDataFrame[regressorColumns]
+        
+        print(regressorDataFrame.description(options: formattingOptions))
+        
+        /* Creating the classifier dataframe. */
+        
+        let classifierColumns = ["purpose", "solarPanels", "greenhouses", "size"]
+        let classifierDataFrame = primaryDataFrame[classifierColumns]
+        
+        print(classifierDataFrame.description(options: formattingOptions))
+        
+        /* ----------------------------------------------------------------------- */
+        
+        
         
     }
 }
