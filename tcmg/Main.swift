@@ -40,7 +40,6 @@ struct Main: ParsableCommand {
         do {
             let dataFileURL = try newCSVFileURL(dataFileName)
             primaryDataFrame = try DataFrame(contentsOfCSVFile: dataFileURL,
-                                             rows: 0..<50,
                                              options: csvOptions)
         } catch UtilityError.fileWrongType {
             print("ERROR: NOT A VALID CSV FILE")
@@ -50,23 +49,35 @@ struct Main: ParsableCommand {
 
         print(primaryDataFrame.description(options: formattingOptions))
         
-        /* Creating the regressor dataframe. */
+        /* Create the regressor dataframe. */
         
         let regressorColumns = ["price", "solarPanels", "greenhouses", "size"]
         let regressorDataFrame = primaryDataFrame[regressorColumns]
         
         print(regressorDataFrame.description(options: formattingOptions))
         
-        /* Creating the classifier dataframe. */
+        /* Create the classifier dataframe. */
         
         let classifierColumns = ["purpose", "solarPanels", "greenhouses", "size"]
         let classifierDataFrame = primaryDataFrame[classifierColumns]
         
         print(classifierDataFrame.description(options: formattingOptions))
         
+        /* Divide the Regressor Data for Training and Evaluation */
+        
+        let (regressorEvaluationDataFrame, regressorTrainingDataFrame) = regressorDataFrame.randomSplit(by: 0.20, seed: 5)
+        
+        print(regressorEvaluationDataFrame)
+        print(regressorTrainingDataFrame)
+        
+        /* Divide the Classifier Data for Training and Evaluation */
+        
+        let (classifierEvaluationDataFrame, classifierTrainingDataFrame) = classifierDataFrame.randomSplit(by: 0.20, seed: 5)
+        
+        print(classifierEvaluationDataFrame)
+        print(classifierTrainingDataFrame)
+        
         /* ----------------------------------------------------------------------- */
-        
-        
         
     }
 }
