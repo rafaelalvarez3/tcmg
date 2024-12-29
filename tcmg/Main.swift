@@ -27,20 +27,27 @@ struct Main: ParsableCommand {
     var dataFileName: String
     
     public func run() throws {
-        let csvOptions = CSVReadingOptions(hasHeaderRow: true,
-                                           delimiter: ",")
+        let csvOptions = CSVReadingOptions(
+                            hasHeaderRow: true,
+                            delimiter: ","
+                         )
         
-        let formattingOptions = FormattingOptions(maximumLineWidth: 250,
-                                                  maximumCellWidth: 250,
-                                                  maximumRowCount: 100,
-                                                  includesColumnTypes: true)
+        let formattingOptions = FormattingOptions(
+                                    maximumLineWidth: 250,
+                                    maximumCellWidth: 250,
+                                    maximumRowCount: 15,
+                                    includesColumnTypes: true
+                                )
         
         var primaryDataFrame: DataFrame = DataFrame()
         
+        /* ----------------------------------------------------------------------- */
+        
         do {
-            let dataFileURL = try newCSVFileURL(dataFileName)
-            primaryDataFrame = try DataFrame(contentsOfCSVFile: dataFileURL,
-                                             options: csvOptions)
+            primaryDataFrame = try DataFrame(
+                                        contentsOfCSVFile: newCSVFileURL(dataFileName),
+                                        options: csvOptions
+                                   )
         } catch UtilityError.fileWrongType {
             print("ERROR: NOT A VALID CSV FILE")
         } catch {
@@ -48,25 +55,19 @@ struct Main: ParsableCommand {
         }
 
         print(primaryDataFrame.description(options: formattingOptions))
-        
+
         /* Create the regressor dataframe. */
-        
-        let regressorColumns = ["price", "solarPanels", "greenhouses", "size"]
-        let regressorDataFrame = primaryDataFrame[regressorColumns]
-        
-        print(regressorDataFrame.description(options: formattingOptions))
+
+        let regressorDataFrame = primaryDataFrame[["price", "solarPanels", "greenhouses", "size"]]
         
         /* Create the classifier dataframe. */
         
-        let classifierColumns = ["purpose", "solarPanels", "greenhouses", "size"]
-        let classifierDataFrame = primaryDataFrame[classifierColumns]
-        
-        print(classifierDataFrame.description(options: formattingOptions))
+        let classifierDataFrame = primaryDataFrame[["purpose", "solarPanels", "greenhouses", "size"]]
         
         /* Divide the Regressor Data for Training and Evaluation */
         
         let (regressorEvaluationDataFrame, regressorTrainingDataFrame) = regressorDataFrame.randomSplit(by: 0.20, seed: 5)
-        
+
         print(regressorEvaluationDataFrame)
         print(regressorTrainingDataFrame)
         
