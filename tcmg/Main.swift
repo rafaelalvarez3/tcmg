@@ -17,7 +17,7 @@ struct Main: ParsableCommand {
         subcommands: [Summary.self],
         defaultSubcommand: Summary.self
     )
-    
+
     @Option(
         name: [
             .customLong("datafile"),
@@ -44,19 +44,19 @@ struct Main: ParsableCommand {
         help: "The name of the classifier model."
     )
     var classfierModelName: String
-    
+
     public func run() throws {
         let csvOptions = CSVReadingOptions(
-                            hasHeaderRow: true,
-                            delimiter: ","
-                         )
+            hasHeaderRow: true,
+            delimiter: ","
+        )
         
         let formattingOptions = FormattingOptions(
-                                    maximumLineWidth: 250,
-                                    maximumCellWidth: 250,
-                                    maximumRowCount: 15,
-                                    includesColumnTypes: true
-                                )
+            maximumLineWidth: 250,
+            maximumCellWidth: 250,
+            maximumRowCount: 15,
+            includesColumnTypes: true
+        )
         
         var primaryDataFrame: DataFrame = DataFrame()
         
@@ -64,19 +64,19 @@ struct Main: ParsableCommand {
         
         do {
             primaryDataFrame = try DataFrame(
-                                        contentsOfCSVFile: newCSVFileURL(dataFileName),
-                                        options: csvOptions
-                                   )
+                contentsOfCSVFile: newCSVFileURL(dataFileName),
+                options: csvOptions
+            )
         } catch UtilityError.fileWrongType {
             print("ERROR: NOT A VALID CSV FILE")
         } catch {
             print("ERROR: AN UNKNOWN ERROR")
         }
-
+        
         print(primaryDataFrame.description(options: formattingOptions))
-
+        
         /* Create the regressor dataframe. */
-
+        
         let regressorDataFrame = primaryDataFrame[["price", "solarPanels", "greenhouses", "size"]]
         
         /* Create the classifier dataframe. */
@@ -96,9 +96,9 @@ struct Main: ParsableCommand {
         /* Train the Regressor */
         
         let regressor = try MLLinearRegressor(
-                                trainingData: DataFrame(regTrainDataFrame),
-                                targetColumn: "price"
-                            )
+            trainingData: DataFrame(regTrainDataFrame),
+            targetColumn: "price"
+        )
         
         print(regressor)
         
@@ -119,9 +119,9 @@ struct Main: ParsableCommand {
         /* Train the Classifier */
         
         let classifier = try MLClassifier(
-                                 trainingData: DataFrame(classTrainDataFrame),
-                                 targetColumn: "purpose"
-                             )
+            trainingData: DataFrame(classTrainDataFrame),
+            targetColumn: "purpose"
+        )
         
         print(classifier)
         
@@ -129,7 +129,7 @@ struct Main: ParsableCommand {
         
         let trainingError = classifier.trainingMetrics.classificationError
         let trainingAccuracy = (1.0 - trainingError) * 100
-
+        
         print(trainingError)
         print(trainingAccuracy)
         
@@ -150,27 +150,27 @@ struct Main: ParsableCommand {
         print(evaluationAccuracy)
         
         /* Save the Model */
-
+        
         let regressorMetadata = MLModelMetadata(
-                                    author: "Rafael Alvarez",
-                                    shortDescription: "Predicts the price of a habitat on Mars.",
-                                    version: "1.0"
-                                )
-
+            author: "Rafael Alvarez",
+            shortDescription: "Predicts the price of a habitat on Mars.",
+            version: "1.0"
+        )
+        
         print(regressorMetadata)
-
+        
         try regressor.write(to: URL(fileURLWithPath: "\(regressorModelName).mlmodel"), metadata: regressorMetadata)
-
-
+        
+        
         let classifierMetadata = MLModelMetadata(
-                                     author: "Rafael Alvarez",
-                                     shortDescription: "Predicts the price of a habitat on Mars.",
-                                     version: "1.0"
-                                 )
-
+            author: "Rafael Alvarez",
+            shortDescription: "Predicts the price of a habitat on Mars.",
+            version: "1.0"
+        )
+        
         print(classifierMetadata)
-
+        
         try classifier.write(to: URL(fileURLWithPath: "\(classfierModelName).mlmodel"), metadata: classifierMetadata)
-
+        
     }
 }
