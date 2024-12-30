@@ -130,5 +130,26 @@ struct Main: ParsableCommand {
         print(evaluationError)
         print(evaluationAccuracy)
         
+        /* Save the Model */
+
+        let regressorMetadata = MLModelMetadata(author: "Rafael Alvarez",
+                                                shortDescription: "Predicts the price of a habitat on Mars.",
+                                                version: "1.0")
+
+        print(regressorMetadata)
+
+        //try regressor.write(to: URL(fileURLWithPath: "/Users/rafael/Desktop/marsmodel/MarsHabitatPricer.mlmodel"),
+        //                    metadata: regressorMetadata)
+
+
+        let classifierMetadata = MLModelMetadata(author: "Rafael Alvarez",
+                                                 shortDescription: "Predicts the price of a habitat on Mars.",
+                                                 version: "1.0")
+
+        print(classifierMetadata)
+
+        //try classifier.write(to: URL(fileURLWithPath: "/Users/rafael/Desktop/marsmodel/MarsHabitatPurposeClassifier.mlmodel"),
+        //                     metadata: classifierMetadata)
+
     }
 }
