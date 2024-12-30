@@ -14,8 +14,7 @@ import TabularData
 struct Main: ParsableCommand {
     static let configuration = CommandConfiguration(
         abstract:  "A utility to create and train Core ML models.",
-        subcommands: [Summary.self],
-        defaultSubcommand: Summary.self
+        subcommands: [Summary.self]
     )
 
     @Option(
