@@ -108,7 +108,27 @@ struct Main: ParsableCommand {
         
         /* Evaluate the Classifier */
         
+        let trainingError = classifier.trainingMetrics.classificationError
+        let trainingAccuracy = (1.0 - trainingError) * 100
+
+        print(trainingError)
+        print(trainingAccuracy)
         
+        let validationError = classifier.validationMetrics.classificationError
+        let validationAccuracy = (1.0 - validationError) * 100
+        
+        print(validationError)
+        print(validationAccuracy)
+        
+        let classifierEvaluation = classifier.evaluation(on: DataFrame(classEvalDataFrame))
+        
+        print(classifierEvaluation)
+        
+        let evaluationError = classifierEvaluation.classificationError
+        let evaluationAccuracy = (1.0 - evaluationError) * 100
+        
+        print(evaluationError)
+        print(evaluationAccuracy)
         
     }
 }
