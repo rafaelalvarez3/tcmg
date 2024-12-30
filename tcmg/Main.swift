@@ -66,19 +66,47 @@ struct Main: ParsableCommand {
         
         /* Divide the Regressor Data for Training and Evaluation */
         
-        let (regressorEvaluationDataFrame, regressorTrainingDataFrame) = regressorDataFrame.randomSplit(by: 0.20, seed: 5)
-
-        print(regressorEvaluationDataFrame)
-        print(regressorTrainingDataFrame)
+        let (regEvalDataFrame, regTrainDataFrame) = regressorDataFrame.randomSplit(by: 0.20, seed: 5)
         
         /* Divide the Classifier Data for Training and Evaluation */
         
-        let (classifierEvaluationDataFrame, classifierTrainingDataFrame) = classifierDataFrame.randomSplit(by: 0.20, seed: 5)
-        
-        print(classifierEvaluationDataFrame)
-        print(classifierTrainingDataFrame)
+        let (classEvalDataFrame, classTrainDataFrame) = classifierDataFrame.randomSplit(by: 0.20, seed: 5)
         
         /* ----------------------------------------------------------------------- */
+        
+        /* Train the Regressor */
+        
+        let regressor = try MLLinearRegressor(
+                                trainingData: DataFrame(regTrainDataFrame),
+                                targetColumn: "price"
+                            )
+        
+        print(regressor)
+        
+        /* Evaluate the Regressor */
+        
+        let worstTrainingError = regressor.trainingMetrics.maximumError
+        let worstValidationError = regressor.validationMetrics.maximumError
+        
+        print(worstTrainingError)
+        print(worstValidationError)
+        
+        let regressorEvaluation = regressor.evaluation(on: DataFrame(regEvalDataFrame))
+        let worstEvaluationError = regressorEvaluation.maximumError
+        
+        print(regressorEvaluation)
+        print(worstEvaluationError)
+        
+        /* Train the Classifier */
+        
+        let classifier = try MLClassifier(
+                                 trainingData: DataFrame(classTrainDataFrame),
+                                 targetColumn: "purpose"
+                             )
+        
+        print(classifier)
+        
+        /* Evaluate the Classifier */
         
         
         
