@@ -10,7 +10,6 @@ import ArgumentParser
 import CreateML
 import TabularData
 
-
 @main
 struct Main: ParsableCommand {
     static let configuration = CommandConfiguration(
@@ -22,9 +21,27 @@ struct Main: ParsableCommand {
             .customLong("datafile"),
             .customShort("d")
         ],
-        help: "The path of the data file."
+        help: "The name of the data file."
     )
     var dataFileName: String
+    
+    @Option(
+        name: [
+            .customLong("regressor"),
+            .customShort("r")
+        ],
+        help: "The name of the regressor model."
+    )
+    var regressorModelName: String
+    
+    @Option(
+        name: [
+            .customLong("classifier"),
+            .customShort("c")
+        ],
+        help: "The name of the classifier model."
+    )
+    var classfierModelName: String
     
     public func run() throws {
         let csvOptions = CSVReadingOptions(
@@ -132,24 +149,26 @@ struct Main: ParsableCommand {
         
         /* Save the Model */
 
-        let regressorMetadata = MLModelMetadata(author: "Rafael Alvarez",
-                                                shortDescription: "Predicts the price of a habitat on Mars.",
-                                                version: "1.0")
+        let regressorMetadata = MLModelMetadata(
+                                    author: "Rafael Alvarez",
+                                    shortDescription: "Predicts the price of a habitat on Mars.",
+                                    version: "1.0"
+                                )
 
         print(regressorMetadata)
 
-        //try regressor.write(to: URL(fileURLWithPath: "/Users/rafael/Desktop/marsmodel/MarsHabitatPricer.mlmodel"),
-        //                    metadata: regressorMetadata)
+        try regressor.write(to: URL(fileURLWithPath: "\(regressorModelName).mlmodel"), metadata: regressorMetadata)
 
 
-        let classifierMetadata = MLModelMetadata(author: "Rafael Alvarez",
-                                                 shortDescription: "Predicts the price of a habitat on Mars.",
-                                                 version: "1.0")
+        let classifierMetadata = MLModelMetadata(
+                                     author: "Rafael Alvarez",
+                                     shortDescription: "Predicts the price of a habitat on Mars.",
+                                     version: "1.0"
+                                 )
 
         print(classifierMetadata)
 
-        //try classifier.write(to: URL(fileURLWithPath: "/Users/rafael/Desktop/marsmodel/MarsHabitatPurposeClassifier.mlmodel"),
-        //                     metadata: classifierMetadata)
+        try classifier.write(to: URL(fileURLWithPath: "\(classfierModelName).mlmodel"), metadata: classifierMetadata)
 
     }
 }
