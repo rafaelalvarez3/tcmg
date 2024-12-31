@@ -1,9 +1,6 @@
-//
 //  Main.swift
 //  tcmg
-//
 //  Created by Rafael Alvarez on 12/16/24.
-//
 
 import Foundation
 import ArgumentParser
@@ -11,11 +8,17 @@ import CreateML
 import TabularData
 
 @main
-struct Main: ParsableCommand {
+struct TCMG: ParsableCommand {
     static let configuration = CommandConfiguration(
-        abstract:  "A utility to create and train Core ML models."
+        abstract:  "A utility to create and train Core ML models.",
+        version: "0.0.1",
+        subcommands: [Summary.self]
     )
+}
 
+/* --------------------------------------------------------------------- */
+
+struct GlobalOptions: ParsableArguments {
     @Option(
         name: [
             .customLong("datafile"),
@@ -24,25 +27,76 @@ struct Main: ParsableCommand {
         help: "The name of the data file."
     )
     var dataFileName: String
-    
-    @Option(
-        name: [
-            .customLong("regressor"),
-            .customShort("r")
-        ],
-        help: "The name of the regressor model."
-    )
-    var regressorModelName: String
-    
-    @Option(
-        name: [
-            .customLong("classifier"),
-            .customShort("c")
-        ],
-        help: "The name of the classifier model."
-    )
-    var classfierModelName: String
+}
 
+/* --------------------------------------------------------------------- */
+
+extension TCMG {
+    struct Summary: ParsableCommand {
+        
+        @OptionGroup var options: GlobalOptions
+        
+        public func run() throws {
+            
+            let csvOptions = CSVReadingOptions(
+                hasHeaderRow: true,
+                delimiter: ","
+            )
+            
+            var summaryDataFrame: DataFrame = DataFrame()
+            
+            do {
+                summaryDataFrame = try DataFrame(
+                    contentsOfCSVFile: newCSVFileURL(options.dataFileName),
+                    options: csvOptions
+                )
+            } catch UtilityError.fileWrongType {
+                print("ERROR: NOT A VALID CSV FILE")
+            } catch {
+                print("ERROR: AN UNKNOWN ERROR")
+            }
+            
+            print(summaryDataFrame.summary())
+        }
+    }
+}
+
+/* --------------------------------------------------------------------- */
+
+
+
+/*
+
+ 
+ 
+ 
+ extension Main {
+ 
+ let formattingOptions = FormattingOptions(
+     maximumLineWidth: 250,
+     maximumCellWidth: 250,
+     maximumRowCount: 15,
+     includesColumnTypes: true
+ )
+ 
+ @Option(
+     name: [
+         .customLong("regressor"),
+         .customShort("r")
+     ],
+     help: "The name of the regressor model."
+ )
+ var regressorModelName: String
+ 
+ @Option(
+     name: [
+         .customLong("classifier"),
+         .customShort("c")
+     ],
+     help: "The name of the classifier model."
+ )
+ var classfierModelName: String
+ 
     public func run() throws {
         let csvOptions = CSVReadingOptions(
             hasHeaderRow: true,
@@ -171,4 +225,5 @@ struct Main: ParsableCommand {
         try classifier.write(to: URL(fileURLWithPath: "\(classfierModelName).mlmodel"), metadata: classifierMetadata)
         
     }
-}
+    
+}*/

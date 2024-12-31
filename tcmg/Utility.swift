@@ -7,12 +7,12 @@
 
 import Foundation
 
-extension Main {
+extension TCMG {
     enum UtilityError: Error {
         case fileWrongType
     }
 
-    func newCSVFileURL(_ CSVFilePath: String) throws -> URL {
+    static func newCSVFileURL(_ CSVFilePath: String) throws -> URL {
         let fileURL = URL(fileURLWithPath: CSVFilePath)
         guard fileURL.pathExtension == "csv" else {
             throw UtilityError.fileWrongType
