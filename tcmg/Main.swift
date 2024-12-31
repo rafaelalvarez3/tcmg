@@ -71,7 +71,7 @@ struct Main: ParsableCommand {
             print("ERROR: AN UNKNOWN ERROR")
         }
         
-        // print(primaryDataFrame.description(options: formattingOptions))
+        print(primaryDataFrame.description(options: formattingOptions))
         
         /* Create the regressor dataframe. */
         
