@@ -25,7 +25,7 @@ extension TCMG {
             ],
             help: "The name of the classfier model."
         )
-        var regressorModelName: String
+        var classfierModelName: String
         @Flag(
             name: [
                 .customLong("evaluate"),
@@ -33,7 +33,7 @@ extension TCMG {
             ],
             help: "To evaluate the model after it is trained."
         )
-        var evaluateRegressor: Bool = false
+        var evaluateClassifier: Bool = false
         @Flag(
             name: [
                 .customLong("save"),
@@ -42,6 +42,29 @@ extension TCMG {
             help: "To save the model after it is trained."
         )
         var saveModel: Bool = false
+        
+        public func run() throws {
+            let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
+            
+            /* Create the classifier dataframe. */
+            
+            let classifierDataFrame = primaryDataFrame[["purpose", "solarPanels", "greenhouses", "size"]]
+        
+            
+            /* Divide the Classifier Data for Training and Evaluation */
+            
+            let (classEvalDataFrame, classTrainDataFrame) = classifierDataFrame.randomSplit(by: 0.20, seed: 5)
+
+            /* Train the Classifier */
+            
+            let classifier = try MLClassifier(
+                trainingData: DataFrame(classTrainDataFrame),
+                targetColumn: "purpose"
+            )
+            
+            print(classifier)
+            
+        }
         
     }
 }
