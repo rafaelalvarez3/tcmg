@@ -9,6 +9,7 @@ import ArgumentParser
 struct TCMG: ParsableCommand {
     static let configuration = CommandConfiguration(
         abstract:  "A utility to create and train Core ML models.",
+        discussion: "A longer description of this command that is shown in the help menu.",
         version: "0.0.1",
         subcommands: [Summary.self]
     )

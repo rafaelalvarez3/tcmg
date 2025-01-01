@@ -9,7 +9,13 @@ import TabularData
 extension TCMG {
     struct Summary: ParsableCommand {
         
+        static let configuration = CommandConfiguration(
+            abstract: "Prints out a summary of the loaded data frame.",
+            discussion: "A longer description of this command that is shown in the help menu."
+        )
+        
         @OptionGroup var options: GlobalOptions
+        @Flag var columnNames: Bool = false
         
         public func run() throws {
             
@@ -31,7 +37,10 @@ extension TCMG {
                 print("ERROR: AN UNKNOWN ERROR")
             }
             
-            print(summaryDataFrame.summary())
+            print(columnNames ? summaryDataFrame.columns.map { colName in colName.name } : summaryDataFrame.summary())
+            
+            //print(summaryDataFrame.summary())
+            //print(summaryDataFrame.columns.map { colName in colName.name })
         }
     }
 }
