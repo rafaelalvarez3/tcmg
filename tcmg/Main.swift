@@ -4,8 +4,6 @@
 
 import Foundation
 import ArgumentParser
-import CreateML
-import TabularData
 
 @main
 struct TCMG: ParsableCommand {
