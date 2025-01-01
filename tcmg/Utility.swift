@@ -1,9 +1,6 @@
-//
 //  Utility.swift
 //  tcmg
-//
 //  Created by Rafael Alvarez on 12/20/24.
-//
 
 import Foundation
 

@@ -1,9 +1,6 @@
-//
 //  Summary.swift
 //  tcmg
-//
 //  Created by Rafael Alvarez on 12/31/24.
-//
 
 import Foundation
 import ArgumentParser
