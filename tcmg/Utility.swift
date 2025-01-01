@@ -3,6 +3,7 @@
 //  Created by Rafael Alvarez on 12/20/24.
 
 import Foundation
+import TabularData
 
 extension TCMG {
     enum UtilityError: Error {
@@ -16,4 +17,27 @@ extension TCMG {
         }
         return fileURL
     }
+    
+    static func createCSVDataFrame(_ csvfile: String) throws -> DataFrame {
+        let csvOptions = CSVReadingOptions(
+            hasHeaderRow: true,
+            delimiter: ","
+        )
+        
+        var newDataFrame: DataFrame = DataFrame()
+        
+        do {
+            newDataFrame = try DataFrame(
+                contentsOfCSVFile: newCSVFileURL(csvfile),
+                options: csvOptions
+            )
+        } catch UtilityError.fileWrongType {
+            print("ERROR: NOT A VALID CSV FILE")
+        } catch {
+            print("ERROR: AN UNKNOWN ERROR")
+        }
+        
+        return newDataFrame
+    }
+    
 }

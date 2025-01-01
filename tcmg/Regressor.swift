@@ -15,5 +15,18 @@ extension TCMG {
             abstract: "This is the regressor command.",
             discussion: "A longer description of this command that is shown in the help menu."
         )
+        
+        @OptionGroup var options: GlobalOptions
+        @Option(
+            name: [
+                .customLong("reg-name"),
+                .customShort("r")
+            ],
+            help: "The name of the regressor model."
+        )
+        var regressorModelName: String
+        
+        
+        
     }
 }
