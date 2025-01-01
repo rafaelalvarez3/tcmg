@@ -41,7 +41,7 @@ extension TCMG {
             ],
             help: "To save the model after it is trained."
         )
-        var saveRegressor: Bool = false
+        var saveModel: Bool = false
         
         public func run() throws {
             let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
@@ -78,7 +78,7 @@ extension TCMG {
                 
             }
             
-            if saveRegressor {
+            if saveModel {
                 let regressorMetadata = MLModelMetadata(
                     author: "Rafael Alvarez",
                     shortDescription: "Predicts the price of a habitat on Mars.",
@@ -90,7 +90,7 @@ extension TCMG {
                                             metadata: regressorMetadata
                                         )
                 
-                print("\(regressorModelName).mlmodel saved!")
+                print("SUCCESS: \(regressorModelName).mlmodel saved!")
                 
             }
         }
