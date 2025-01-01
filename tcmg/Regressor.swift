@@ -8,6 +8,7 @@
 import Foundation
 import ArgumentParser
 import TabularData
+import CreateML
 
 extension TCMG {
     struct Regressor: ParsableCommand {
@@ -25,8 +26,69 @@ extension TCMG {
             help: "The name of the regressor model."
         )
         var regressorModelName: String
+        @Flag(
+            name: [
+                .customLong("evaluate"),
+                .customShort("e")
+            ],
+            help: "To evaluate the model after it is trained."
+        )
+        var evaluateRegressor: Bool = false
+        @Flag(
+            name: [
+                .customLong("save"),
+                .customShort("s")
+            ],
+            help: "To save the model after it is trained."
+        )
+        var saveRegressor: Bool = false
         
-        
+        public func run() throws {
+            var primaryDataFrame = try createCSVDataFrame(options.dataFileName)
+            
+            /* Create the regressor dataframe. */
+            
+            let regressorDataFrame = primaryDataFrame[["price", "solarPanels", "greenhouses", "size"]]
+            
+            /* Divide the Regressor Data for Training and Evaluation */
+            
+            let (regEvalDataFrame, regTrainDataFrame) = regressorDataFrame.randomSplit(by: 0.20, seed: 5)
+            
+            let regressor = try MLLinearRegressor(
+                trainingData: DataFrame(regTrainDataFrame),
+                targetColumn: "price"
+            )
+            
+            print(regressor)
+            
+            if evaluateRegressor {
+                /* Evaluate the Regressor */
+                
+                let worstTrainingError = regressor.trainingMetrics.maximumError
+                let worstValidationError = regressor.validationMetrics.maximumError
+                
+                print(worstTrainingError)
+                print(worstValidationError)
+                
+                let regressorEvaluation = regressor.evaluation(on: DataFrame(regEvalDataFrame))
+                let worstEvaluationError = regressorEvaluation.maximumError
+                
+                print(regressorEvaluation)
+                print(worstEvaluationError)
+                
+            }
+            
+            if saveRegressor {
+                let regressorMetadata = MLModelMetadata(
+                    author: "Rafael Alvarez",
+                    shortDescription: "Predicts the price of a habitat on Mars.",
+                    version: "1.0"
+                )
+                
+                print(regressorMetadata)
+            }
+            
+        }
         
     }
 }
