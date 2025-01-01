@@ -25,7 +25,7 @@ extension TCMG {
             ],
             help: "The name of the classfier model."
         )
-        var classfierModelName: String
+        var classifierModelName: String
         @Flag(
             name: [
                 .customLong("evaluate"),
@@ -63,6 +63,46 @@ extension TCMG {
             )
             
             print(classifier)
+            
+            if evaluateClassifier {
+                let trainingError = classifier.trainingMetrics.classificationError
+                let trainingAccuracy = (1.0 - trainingError) * 100
+                
+                print(trainingError)
+                print(trainingAccuracy)
+                
+                let validationError = classifier.validationMetrics.classificationError
+                let validationAccuracy = (1.0 - validationError) * 100
+                
+                print(validationError)
+                print(validationAccuracy)
+                
+                let classifierEvaluation = classifier.evaluation(on: DataFrame(classEvalDataFrame))
+                
+                print(classifierEvaluation)
+                
+                let evaluationError = classifierEvaluation.classificationError
+                let evaluationAccuracy = (1.0 - evaluationError) * 100
+                
+                print(evaluationError)
+                print(evaluationAccuracy)
+            }
+            
+            if saveModel {
+                let classifierMetadata = MLModelMetadata(
+                    author: "Rafael Alvarez",
+                    shortDescription: "Predicts the price of a habitat on Mars.",
+                    version: "1.0"
+                )
+                
+                try classifier.write(to: URL(
+                                            fileURLWithPath: "\(classifierModelName).mlmodel"),
+                                            metadata: classifierMetadata
+                                        )
+                
+                print("SUCCESS: \(classifierModelName).mlmodel saved!")
+                
+            }
             
         }
         
