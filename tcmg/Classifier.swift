@@ -98,7 +98,7 @@ extension TCMG {
                 try classifier.write(to: URL(
                                             fileURLWithPath: "\(classifierModelName).mlmodel"),
                                             metadata: classifierMetadata
-                                        )
+                                         )
                 
                 print("SUCCESS: \(classifierModelName).mlmodel saved!")
                 
