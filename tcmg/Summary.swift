@@ -18,7 +18,7 @@ extension TCMG {
         @Flag var columnNames: Bool = false
         
         public func run() throws {
-            var summaryDataFrame = try createCSVDataFrame(options.dataFileName)
+            let summaryDataFrame = try createCSVDataFrame(options.dataFileName)
              
             print(columnNames ? summaryDataFrame.columns.map { colName in
                 colName.name

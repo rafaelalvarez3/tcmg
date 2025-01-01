@@ -44,7 +44,7 @@ extension TCMG {
         var saveRegressor: Bool = false
         
         public func run() throws {
-            var primaryDataFrame = try createCSVDataFrame(options.dataFileName)
+            let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
             
             /* Create the regressor dataframe. */
             
