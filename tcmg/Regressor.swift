@@ -85,10 +85,14 @@ extension TCMG {
                     version: "1.0"
                 )
                 
-                print(regressorMetadata)
+                try regressor.write(to: URL(
+                                            fileURLWithPath: "\(regressorModelName).mlmodel"),
+                                            metadata: regressorMetadata
+                                        )
+                
+                print("\(regressorModelName).mlmodel saved!")
+                
             }
-            
         }
-        
     }
 }
