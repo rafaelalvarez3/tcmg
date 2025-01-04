@@ -28,6 +28,7 @@ extension TCMG {
             public func run() throws {
                 let summaryDataFrame = try createCSVDataFrame(options.dataFileName)
                 print(summaryDataFrame.summary())
+                print("The data frame is \(MemoryLayout.size(ofValue: summaryDataFrame)) bytes in size.")
             }
             
         }
