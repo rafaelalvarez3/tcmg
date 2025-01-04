@@ -43,11 +43,21 @@ extension TCMG {
             
             public func run() throws {
                 let summaryDataFrame = try createCSVDataFrame(options.dataFileName)
-                print(
-                    summaryDataFrame.columns.map { colName in
-                        colName.name
-                    }
-                )
+                var columnNames = summaryDataFrame.columns.map { colName in
+                    colName.name
+                }
+                
+                print("--------------------------")
+                
+                for columnName in columnNames {
+                    print(columnName)
+                }
+                
+                print("--------------------------")
+                
+                print("Total Columns: \(columnNames.count)")
+                
+                print("--------------------------")
             }
         }
         
