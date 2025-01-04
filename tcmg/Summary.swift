@@ -20,9 +20,19 @@ extension TCMG {
         public func run() throws {
             let summaryDataFrame = try createCSVDataFrame(options.dataFileName)
              
-            print(columnNames ? summaryDataFrame.columns.map { colName in
+            /* print(columnNames ? summaryDataFrame.columns.map { colName in
                 colName.name
-            } : summaryDataFrame.summary())
+            } : summaryDataFrame.summary()) */
+            
+            if columnNames {
+                print(
+                    summaryDataFrame.columns.map { colName in
+                        colName.name
+                    }
+                )
+            } else {
+                print(summaryDataFrame.summary())
+            }
         }
     }
 }
