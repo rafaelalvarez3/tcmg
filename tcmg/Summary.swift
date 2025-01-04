@@ -7,18 +7,19 @@ import ArgumentParser
 import TabularData
 
 extension TCMG {
-    struct Summary: ParsableCommand {
+    struct Info: ParsableCommand {
         static let configuration = CommandConfiguration(
             abstract: "Prints out summary information about the loaded data frame.",
             discussion: "A longer description of this command that is shown in the help menu.",
-            subcommands: [All.self, ColumnInfo.self],
-            defaultSubcommand: All.self
+            subcommands: [AllInfo.self, ColumnInfo.self],
+            defaultSubcommand: AllInfo.self
         )
         
         /* --------------------------------------------------------------------- */
         
-        struct All: ParsableCommand {
+        struct AllInfo: ParsableCommand {
             static let configuration = CommandConfiguration(
+                commandName: "all",
                 abstract: "Prints out a full summary of the loaded data frame."
             )
             
@@ -43,9 +44,7 @@ extension TCMG {
             
             public func run() throws {
                 let summaryDataFrame = try createCSVDataFrame(options.dataFileName)
-                var columnNames = summaryDataFrame.columns.map { colName in
-                    colName.name
-                }
+                var columnNames = mapColumns(summaryDataFrame)
                 
                 print("--------------------------")
                 

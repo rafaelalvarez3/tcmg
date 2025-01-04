@@ -40,6 +40,12 @@ extension TCMG {
         return newDataFrame
     }
     
+    static func mapColumns(_ dataframe: DataFrame) -> [String] {
+        return dataframe.columns.map { colName in
+            colName.name
+        }
+    }
+    
 }
 
 /*

@@ -13,7 +13,7 @@ struct TCMG: ParsableCommand {
         discussion: "A longer description of this command that is shown in the help menu.",
         version: "0.0.1",
         subcommands: [
-            Summary.self,
+            Info.self,
             Regressor.self,
             Classifier.self
         ]
