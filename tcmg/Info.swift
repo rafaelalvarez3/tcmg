@@ -45,7 +45,7 @@ extension TCMG {
             
             public func run() throws {
                 let summaryDataFrame = try createCSVDataFrame(options.dataFileName)
-                var columnNames = mapColumns(summaryDataFrame)
+                let columnNames = mapColumns(summaryDataFrame)
                 
                 print("--------------------------")
                 
