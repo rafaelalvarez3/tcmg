@@ -11,6 +11,8 @@ import TabularData
 import CreateML
 
 extension TCMG {
+    
+    /*
     struct Classifier: ParsableCommand {
         static let configuration = CommandConfiguration(
             abstract: "This is the classfier command.",
@@ -107,4 +109,5 @@ extension TCMG {
         }
         
     }
+    */
 }

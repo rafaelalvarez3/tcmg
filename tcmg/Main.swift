@@ -14,8 +14,7 @@ struct TCMG: ParsableCommand {
         version: "0.0.1",
         subcommands: [
             Info.self,
-            Regressor.self,
-            Classifier.self
+            Train.self
         ]
     )
 }

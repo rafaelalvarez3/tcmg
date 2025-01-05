@@ -11,6 +11,9 @@ import TabularData
 import CreateML
 
 extension TCMG {
+    
+    /*
+    
     struct Regressor: ParsableCommand {
         static let configuration = CommandConfiguration(
             abstract: "This is the regressor command.",
@@ -95,4 +98,7 @@ extension TCMG {
             }
         }
     }
+     
+    */
+     
 }
