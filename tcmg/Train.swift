@@ -35,7 +35,6 @@ extension TCMG {
                 help: "To evaluate the model after it is trained."
             )
             var evaluateRegressor: Bool = false
-            /*
             @Option(
                 name: [
                     .customLong("reg-name"),
@@ -52,7 +51,6 @@ extension TCMG {
                 help: "To save the model after it is trained."
             )
             var saveModel: Bool = false
-            */
             
             public func run() throws {
                 let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
@@ -88,6 +86,22 @@ extension TCMG {
                     
                     print(regressorEvaluation)
                     print(worstEvaluationError)
+                    
+                }
+                
+                if saveModel {
+                    let regressorMetadata = MLModelMetadata(
+                        author: "Rafael Alvarez",
+                        shortDescription: "Predicts the price of a habitat on Mars.",
+                        version: "1.0"
+                    )
+                    
+                    try regressor.write(to: URL(
+                                                fileURLWithPath: "\(regressorModelName).mlmodel"),
+                                                metadata: regressorMetadata
+                                            )
+                    
+                    print("SUCCESS: \(regressorModelName).mlmodel saved!")
                     
                 }
             }
