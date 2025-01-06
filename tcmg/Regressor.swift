@@ -12,9 +12,9 @@ import CreateML
 
 extension TCMG {
     
-    /*
     
-    struct Regressor: ParsableCommand {
+    /*
+    struct OldRegressor: ParsableCommand {
         static let configuration = CommandConfiguration(
             abstract: "This is the regressor command.",
             discussion: "A longer description of this command that is shown in the help menu."
@@ -98,7 +98,5 @@ extension TCMG {
             }
         }
     }
-     
     */
-     
 }

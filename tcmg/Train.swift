@@ -8,6 +8,7 @@
 import Foundation
 import ArgumentParser
 import TabularData
+import CreateML
 
 extension TCMG {
     struct Train: ParsableCommand {
@@ -24,6 +25,32 @@ extension TCMG {
                 abstract: "Trains the regressor.",
                 discussion: "A longer description of this command that is shown in the help menu."
             )
+            
+            @OptionGroup var options: GlobalOptions
+            @Option(
+                name: [
+                    .customLong("reg-name"),
+                    .customShort("r")
+                ],
+                help: "The name of the regressor model."
+            )
+            var regressorModelName: String
+            @Flag(
+                name: [
+                    .customLong("evaluate"),
+                    .customShort("e")
+                ],
+                help: "To evaluate the model after it is trained."
+            )
+            var evaluateRegressor: Bool = false
+            @Flag(
+                name: [
+                    .customLong("save"),
+                    .customShort("s")
+                ],
+                help: "To save the model after it is trained."
+            )
+            var saveModel: Bool = false
             
             public func run() throws {
                 print("regressor command works!")
@@ -42,6 +69,8 @@ extension TCMG {
                 print("classifier command works!")
             }
         }
+        
+        /* --------------------------------------------------------------------- */
         
     }
 }
