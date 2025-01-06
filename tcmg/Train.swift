@@ -27,6 +27,15 @@ extension TCMG {
             )
             
             @OptionGroup var options: GlobalOptions
+            @Flag(
+                name: [
+                    .customLong("evaluate"),
+                    .customShort("e")
+                ],
+                help: "To evaluate the model after it is trained."
+            )
+            var evaluateRegressor: Bool = false
+            /*
             @Option(
                 name: [
                     .customLong("reg-name"),
@@ -37,27 +46,60 @@ extension TCMG {
             var regressorModelName: String
             @Flag(
                 name: [
-                    .customLong("evaluate"),
-                    .customShort("e")
-                ],
-                help: "To evaluate the model after it is trained."
-            )
-            var evaluateRegressor: Bool = false
-            @Flag(
-                name: [
                     .customLong("save"),
                     .customShort("s")
                 ],
                 help: "To save the model after it is trained."
             )
             var saveModel: Bool = false
+            */
             
             public func run() throws {
-                print("regressor command works!")
+                let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
+                
+                /* Create the regressor dataframe. */
+                
+                let regressorDataFrame = primaryDataFrame[["price", "solarPanels", "greenhouses", "size"]]
+                
+                /* Divide the Regressor Data for Training and Evaluation */
+                
+                let (regEvalDataFrame, regTrainDataFrame) = regressorDataFrame.randomSplit(by: 0.20, seed: 5)
+                
+                let regressor = try MLLinearRegressor(
+                    trainingData: DataFrame(regTrainDataFrame),
+                    targetColumn: "price"
+                )
+                
+                print(regressor)
+                
+                print("------------------------------------------------")
+                
+                if evaluateRegressor {
+                    /* Evaluate the Regressor */
+                    
+                    let worstTrainingError = regressor.trainingMetrics.maximumError
+                    let worstValidationError = regressor.validationMetrics.maximumError
+                    
+                    print(worstTrainingError)
+                    print(worstValidationError)
+                    
+                    let regressorEvaluation = regressor.evaluation(on: DataFrame(regEvalDataFrame))
+                    let worstEvaluationError = regressorEvaluation.maximumError
+                    
+                    print(regressorEvaluation)
+                    print(worstEvaluationError)
+                    
+                }
             }
         }
         
+
+        
         /* --------------------------------------------------------------------- */
+        
+        
+        
+        
         
         struct Classifier: ParsableCommand {
             static let configuration = CommandConfiguration(
