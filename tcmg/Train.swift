@@ -17,9 +17,7 @@ extension TCMG {
             discussion: "A longer description of this command that is shown in the help menu.",
             subcommands: [Regressor.self, Classifier.self]
         )
-        
         /* --------------------------------------------------------------------- */
-        
         struct Regressor: ParsableCommand {
             static let configuration = CommandConfiguration(
                 abstract: "Trains the regressor.",
@@ -106,15 +104,7 @@ extension TCMG {
                 }
             }
         }
-        
-
-        
         /* --------------------------------------------------------------------- */
-        
-        
-        
-        
-        
         struct Classifier: ParsableCommand {
             static let configuration = CommandConfiguration(
                 abstract: "Trains the classifier.",
@@ -154,7 +144,6 @@ extension TCMG {
                 
                 let classifierDataFrame = primaryDataFrame[["purpose", "solarPanels", "greenhouses", "size"]]
             
-                
                 /* Divide the Classifier Data for Training and Evaluation */
                 
                 let (classEvalDataFrame, classTrainDataFrame) = classifierDataFrame.randomSplit(by: 0.20, seed: 5)
@@ -209,8 +198,6 @@ extension TCMG {
                 }
             }
         }
-        
         /* --------------------------------------------------------------------- */
-        
     }
 }

@@ -14,9 +14,7 @@ extension TCMG {
             subcommands: [AllInfo.self, ColumnInfo.self],
             defaultSubcommand: AllInfo.self
         )
-        
         /* --------------------------------------------------------------------- */
-        
         struct AllInfo: ParsableCommand {
             static let configuration = CommandConfiguration(
                 commandName: "all",
@@ -32,9 +30,7 @@ extension TCMG {
             }
             
         }
-        
         /* --------------------------------------------------------------------- */
-        
         struct ColumnInfo: ParsableCommand {
             static let configuration = CommandConfiguration(
                 commandName: "columns",
@@ -60,9 +56,6 @@ extension TCMG {
                 print("--------------------------")
             }
         }
-        
         /* --------------------------------------------------------------------- */
     }
 }
-
-
