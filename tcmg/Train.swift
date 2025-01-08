@@ -88,34 +88,11 @@ extension TCMG {
                 discussion: "A longer description of this command that is shown in the help menu."
             )
             
-            @OptionGroup var options: GlobalOptions
-            @Option(
-                name: [
-                    .customLong("class-name"),
-                    .customShort("c")
-                ],
-                help: "The name of the classfier model."
-            )
-            var classifierModelName: String
-            @Flag(
-                name: [
-                    .customLong("evaluate"),
-                    .customShort("e")
-                ],
-                help: "To evaluate the model after it is trained."
-            )
-            var evaluateClassifier: Bool = false
-            @Flag(
-                name: [
-                    .customLong("save"),
-                    .customShort("s")
-                ],
-                help: "To save the model after it is trained."
-            )
-            var saveModel: Bool = false
+            @OptionGroup var globalOptions: GlobalOptions
+            @OptionGroup var trainingOptions: TrainingOptions
             
             public func run() throws {
-                let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
+                let primaryDataFrame = try createCSVDataFrame(globalOptions.dataFileName)
                 
                 /* Create the classifier dataframe. */
                 
@@ -134,7 +111,7 @@ extension TCMG {
                 
                 print(classifier)
                 
-                if evaluateClassifier {
+                if trainingOptions.evaluate {
                     let trainingError = classifier.trainingMetrics.classificationError
                     let trainingAccuracy = (1.0 - trainingError) * 100
                     
@@ -158,7 +135,7 @@ extension TCMG {
                     print(evaluationAccuracy)
                 }
                 
-                if saveModel {
+                if trainingOptions.saveModel {
                     let classifierMetadata = MLModelMetadata(
                         author: "Rafael Alvarez",
                         shortDescription: "Predicts the price of a habitat on Mars.",
@@ -166,11 +143,11 @@ extension TCMG {
                     )
                     
                     try classifier.write(to: URL(
-                                                fileURLWithPath: "\(classifierModelName).mlmodel"),
+                        fileURLWithPath: "\(trainingOptions.modelName).mlmodel"),
                                                 metadata: classifierMetadata
                                              )
                     
-                    print("SUCCESS: \(classifierModelName).mlmodel saved!")
+                    print("SUCCESS: \(trainingOptions.modelName).mlmodel saved!")
                     
                 }
             }
