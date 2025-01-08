@@ -39,5 +39,12 @@ extension TCMG {
         
         return newDataFrame
     }
-    
 }
+
+/*
+ 
+ Create a file not found error handler. MarsHabitats.csv
+ was written as MarsHabitat.csv and it triggered an
+ unknown error in the summary command.
+ 
+ */
