@@ -18,14 +18,3 @@ struct TCMG: ParsableCommand {
         ]
     )
 }
-
-struct GlobalOptions: ParsableArguments {
-    @Option(
-        name: [
-            .customLong("datafile"),
-            .customShort("d")
-        ],
-        help: "The name of the data file."
-    )
-    var dataFileName: String
-}
