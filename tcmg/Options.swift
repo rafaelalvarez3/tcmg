@@ -29,14 +29,7 @@ struct TrainingOptions: ParsableArguments {
         help: "To evaluate the model after it is trained."
     )
     var evaluate: Bool = false
-    @Option(
-        name: [
-            .customLong("name"),
-            .customShort("n")
-        ],
-        help: "The name of the model."
-    )
-    var modelName: String
+
     @Flag(
         name: [
             .customLong("save"),
@@ -45,5 +38,44 @@ struct TrainingOptions: ParsableArguments {
         help: "To save the model after it is trained."
     )
     var saveModel: Bool = false
+    
+    //
+    
+    @Option(
+        name: [
+            .customLong("name"),
+            .customShort("n")
+        ],
+        help: "The name of the model."
+    )
+    var modelName: String
+    
+    @Option(
+        name: [
+            .customLong("author"),
+            .customShort("a")
+        ],
+        help: "The name of the model's author."
+    )
+    var authorName: String
+    
+    @Option(
+        name: [
+            .customLong("description"),
+            .customShort("k")
+        ],
+        help: "The name of the model's author."
+    )
+    var modelDescription: String
+    
+    @Option(
+        name: [
+            .customLong("modelversion"),
+            .customShort("v")
+        ],
+        help: "The name of the model's author."
+    )
+    var modelVersion: String
+    
 }
 /* --------------------------------------------------------------------- */

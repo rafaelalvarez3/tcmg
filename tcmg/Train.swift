@@ -17,6 +17,7 @@ extension TCMG {
             discussion: "A longer description of this command that is shown in the help menu.",
             subcommands: [Regressor.self, Classifier.self]
         )
+        
         /* --------------------------------------------------------------------- */
         struct Regressor: ParsableCommand {
             static let configuration = CommandConfiguration(
@@ -65,19 +66,15 @@ extension TCMG {
                 }
                 
                 if trainingOptions.saveModel {
-                    let regressorMetadata = MLModelMetadata(
-                        author: "Rafael Alvarez",
-                        shortDescription: "Predicts the price of a habitat on Mars.",
-                        version: "1.0"
-                    )
-                    
                     try regressor.write(to: URL(
-                        fileURLWithPath: "\(trainingOptions.modelName).mlmodel"),
-                                                metadata: regressorMetadata
+                                                fileURLWithPath: "\(trainingOptions.modelName).mlmodel"),
+                                                metadata: MLModelMetadata(
+                                                    author: trainingOptions.authorName,
+                                                    shortDescription: trainingOptions.modelDescription,
+                                                    version: trainingOptions.modelVersion
+                                                )
                                             )
-                    
                     print("SUCCESS: \(trainingOptions.modelName).mlmodel saved!")
-                    
                 }
             }
         }
@@ -136,22 +133,21 @@ extension TCMG {
                 }
                 
                 if trainingOptions.saveModel {
-                    let classifierMetadata = MLModelMetadata(
-                        author: "Rafael Alvarez",
-                        shortDescription: "Predicts the price of a habitat on Mars.",
-                        version: "1.0"
-                    )
-                    
                     try classifier.write(to: URL(
-                        fileURLWithPath: "\(trainingOptions.modelName).mlmodel"),
-                                                metadata: classifierMetadata
+                                                fileURLWithPath: "\(trainingOptions.modelName).mlmodel"),
+                                                metadata: MLModelMetadata(
+                                                    author: trainingOptions.authorName,
+                                                    shortDescription: trainingOptions.modelDescription,
+                                                    version: trainingOptions.modelVersion
+                                                )
                                              )
-                    
                     print("SUCCESS: \(trainingOptions.modelName).mlmodel saved!")
-                    
                 }
             }
         }
         /* --------------------------------------------------------------------- */
     }
+    
 }
+
+
