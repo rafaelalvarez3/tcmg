@@ -24,34 +24,11 @@ extension TCMG {
                 discussion: "A longer description of this command that is shown in the help menu."
             )
             
-            @OptionGroup var options: GlobalOptions
-            @Flag(
-                name: [
-                    .customLong("evaluate"),
-                    .customShort("e")
-                ],
-                help: "To evaluate the model after it is trained."
-            )
-            var evaluateRegressor: Bool = false
-            @Option(
-                name: [
-                    .customLong("reg-name"),
-                    .customShort("r")
-                ],
-                help: "The name of the regressor model."
-            )
-            var regressorModelName: String
-            @Flag(
-                name: [
-                    .customLong("save"),
-                    .customShort("s")
-                ],
-                help: "To save the model after it is trained."
-            )
-            var saveModel: Bool = false
+            @OptionGroup var globalOptions: GlobalOptions
+            @OptionGroup var trainingOptions: TrainingOptions
             
             public func run() throws {
-                let primaryDataFrame = try createCSVDataFrame(options.dataFileName)
+                let primaryDataFrame = try createCSVDataFrame(globalOptions.dataFileName)
                 
                 /* Create the regressor dataframe. */
                 
@@ -70,7 +47,7 @@ extension TCMG {
                 
                 print("------------------------------------------------")
                 
-                if evaluateRegressor {
+                if trainingOptions.evaluate {
                     /* Evaluate the Regressor */
                     
                     let worstTrainingError = regressor.trainingMetrics.maximumError
@@ -87,7 +64,7 @@ extension TCMG {
                     
                 }
                 
-                if saveModel {
+                if trainingOptions.saveModel {
                     let regressorMetadata = MLModelMetadata(
                         author: "Rafael Alvarez",
                         shortDescription: "Predicts the price of a habitat on Mars.",
@@ -95,11 +72,11 @@ extension TCMG {
                     )
                     
                     try regressor.write(to: URL(
-                                                fileURLWithPath: "\(regressorModelName).mlmodel"),
+                        fileURLWithPath: "\(trainingOptions.modelName).mlmodel"),
                                                 metadata: regressorMetadata
                                             )
                     
-                    print("SUCCESS: \(regressorModelName).mlmodel saved!")
+                    print("SUCCESS: \(trainingOptions.modelName).mlmodel saved!")
                     
                 }
             }
