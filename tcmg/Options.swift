@@ -64,7 +64,7 @@ struct TrainingOptions: ParsableArguments {
             .customLong("description"),
             .customShort("k")
         ],
-        help: "The name of the model's author."
+        help: "A description of the model."
     )
     var modelDescription: String
     
@@ -73,7 +73,7 @@ struct TrainingOptions: ParsableArguments {
             .customLong("modelversion"),
             .customShort("v")
         ],
-        help: "The name of the model's author."
+        help: "The model version."
     )
     var modelVersion: String
     
